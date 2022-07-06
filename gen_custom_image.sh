@@ -1,10 +1,13 @@
-NAME_SPACE=sefaz-pe
+NAME_SPACE=cliente
 IMG_NAME=eap74-openjdk11-custom-s2i-openshift-rhel8
 IMG_TAG=1.0
 
 # oc import-image jboss-eap-7/eap74-openjdk11-openshift-rhel8:7.4.5-3 \
 #     --from=registry.redhat.io/jboss-eap-7/eap74-openjdk11-openshift-rhel8:7.4.5-3 \
 #     --confirm -n openshift
+
+# oc new-build eap74-openjdk11-openshift-rhel8:7.4.5-3~https://github.com/dfarias/eap74-custom-image.git \
+#     -n sefaz-pe
 
 oc new-build --name=${IMG_NAME} --binary -n ${NAME_SPACE}
 
