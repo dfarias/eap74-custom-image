@@ -1,0 +1,12 @@
+embed-server -c standalone-openshift.xml
+
+module add --name=microservice-opentrancing-smallrye
+
+module add --name=microservice-opentracing-smallrye --module-xml=/opt/eap/modules/system/layers/base/org/wildfly/extension/microprofile/opentracing-smallrye/main/module.xml
+
+/subsystem=microprofile-opentracing-smallrye:add()
+
+module add --name=org.postgresql --resources=/tmp/postgresql-9.4-1201.jdbc41.jar --dependencies=javax.api,javax.transaction.api
+/subsystem=datasources/jdbc-driver=postgresql:add(driver-name=postgresql,driver-module-name=org.postgresql,driver-xa-datasource-class-name=org.postgresql.xa.PGXADataSource)
+
+stop-embedded-server
