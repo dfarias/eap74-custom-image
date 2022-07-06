@@ -1,0 +1,5 @@
+embed-server --admin-only=true --server-config=standalone-openshift.xml
+
+/system-property=cliente/:add(value=sefaz-pe)
+
+stop-embedded-server
