@@ -1,16 +1,20 @@
-NAME_SPACE=cliente
+NAME_SPACE=dfarias
 IMG_NAME=eap74-openjdk11-custom-s2i-openshift-rhel8
 IMG_TAG=1.0
 
-# oc import-image jboss-eap-7/eap74-openjdk11-openshift-rhel8:7.4.5-3 \
-#     --from=registry.redhat.io/jboss-eap-7/eap74-openjdk11-openshift-rhel8:7.4.5-3 \
-#     --confirm -n openshift
+oc new-project ${NAME_SPACE}
 
-# oc new-build eap74-openjdk11-openshift-rhel8:7.4.5-3~https://github.com/dfarias/eap74-custom-image.git \
-#     -n sefaz-pe
+oc import-image jboss-eap-7/eap74-openjdk11-openshift-rhel8:7.4.5-3 \
+    --from=registry.redhat.io/jboss-eap-7/eap74-openjdk11-openshift-rhel8:7.4.5-3 \
+    --confirm -n openshift
 
-oc new-build --name=${IMG_NAME} --binary -n ${NAME_SPACE}
+oc new-build --name=${IMG_NAME} \
+    eap74-openjdk11-openshift-rhel8:7.4.5-3~https://github.com/dfarias/eap74-custom-image.git \
+    -n ${NAME_SPACE}
 
-oc start-build bc/${IMG_NAME} --from-dir=. --wait --follow -n ${NAME_SPACE}
+oc start-build bc/${IMG_NAME} \
+    --wait --follow \
+    -n ${NAME_SPACE}
 
-oc tag ${IMG_NAME}:latest ${IMG_NAME}:${IMG_TAG} -n ${NAME_SPACE}
+oc new-app ${IMG_NAME} \
+    -n ${NAME_SPACE}
