@@ -1,6 +1,5 @@
 NAME_SPACE=dfarias
 IMG_NAME=eap74-openjdk11-custom-s2i-openshift-rhel8
-IMG_TAG=1.0
 
 oc new-project ${NAME_SPACE}
 
